@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-grid *ngIf="sessions">
+    <ion-grid *ngIf="!isLoading">
         <ion-row>
             <ion-col>
                 <ion-virtual-scroll [items]="sessions">
