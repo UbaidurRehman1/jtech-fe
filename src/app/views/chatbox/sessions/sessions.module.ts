@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { SessionsPage } from './sessions.page';
+import {SlidingItemComponent} from '../../../component/session/sliding-item/sliding-item.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SessionsPage]
+  declarations: [SessionsPage, SlidingItemComponent]
 })
 export class SessionsPageModule {}

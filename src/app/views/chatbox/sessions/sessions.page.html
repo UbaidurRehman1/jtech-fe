@@ -1,9 +1,19 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>sessions</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>sessions</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-grid *ngIf="sessions">
+        <ion-row>
+            <ion-col>
+                <ion-virtual-scroll [items]="sessions">
+                    <div *virtualItem="let session">
+                        <app-sliding-item [session]="session"></app-sliding-item>
+                    </div>
+                </ion-virtual-scroll>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
