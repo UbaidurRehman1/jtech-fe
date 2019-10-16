@@ -1,0 +1,13 @@
+<ion-grid class="footer">
+    <ion-row>
+        <ion-col>
+            <ion-item>
+                <ion-icon class="ion-align-items-start" name="text"></ion-icon>
+                <ion-input type="text" placeholder="Write Message" [(ngModel)]="message"></ion-input>
+                <ion-button fill="clear" (click)="onSend()">
+                    <ion-icon class="ion-align-items-end" name="send" slot="icon-only"></ion-icon>
+                </ion-button>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+</ion-grid>

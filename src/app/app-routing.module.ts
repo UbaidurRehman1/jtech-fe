@@ -6,6 +6,8 @@ const routes: Routes = [
     { path: 'chatbox', loadChildren: () => import('./views/chatbox/chatbox.module').then(m => m.ChatboxPageModule) },
     { path: 'auth', loadChildren: () => import('./views/auth/auth.module').then(m => m.AuthPageModule) },
     { path: 'detail', loadChildren: () => import('./views/detail/detail.module').then(m => m.DetailPageModule)},
+    { path: 'conversation/:sessionId',
+        loadChildren: () => import('./views/conversation/conversation.module').then(m => m.ConversationPageModule)}
 ];
 
 @NgModule({

@@ -11,7 +11,6 @@ const routes: Routes = [
         {path: 'sessions',
         children: [
             {path: '', loadChildren: './sessions/sessions.module#SessionsPageModule'},
-            {path: ':sessionId', loadChildren: './sessions/conversation/conversation.module#ConversationPageModule'}
         ]},
         {path: '', redirectTo: '/chatbox/tabs/all'},
         {path: 'all', loadChildren: './discover/discover.module#DiscoverPageModule'}

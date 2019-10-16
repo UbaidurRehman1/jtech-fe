@@ -8,7 +8,7 @@ import {Session} from '../../../model/session/session';
 })
 export class SlidingItemComponent implements OnInit {
     // tslint:disable-next-line:variable-name
-    public _uri = '/chatbox/tabs/sessions/';
+    public _uri = '/conversation';
     @Input() session: Session = null;
     constructor() { }
     ngOnInit() {}

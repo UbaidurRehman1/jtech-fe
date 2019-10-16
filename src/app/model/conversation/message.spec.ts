@@ -1,4 +1,4 @@
-import { Message } from './message';
+import { Message } from './messageModel';
 
 describe('Message', () => {
   it('should create an instance', () => {

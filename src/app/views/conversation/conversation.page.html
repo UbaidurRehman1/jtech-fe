@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            <h3>Welcome {{userName}}</h3>
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!--    <ion-list *ngIf="!isLoading">-->
+<!--        <ion-item *ngFor="let message of conversation | async">-->
+<!--            <ion-text>{{message.text}}</ion-text>-->
+<!--        </ion-item>-->
+<!--    </ion-list>-->
+    <ion-grid *ngIf="!isLoading">
+        <ion-row>
+            <ion-col>
+                <ion-virtual-scroll [items]="conversation | async">
+                    <div *virtualItem="let message">
+                        <app-message [message]="message"></app-message>
+                    </div>
+                </ion-virtual-scroll>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid class="footer">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-icon class="ion-align-items-start" name="text"></ion-icon>
+                    <ion-input type="text" placeholder="Write Message" [(ngModel)]="message"></ion-input>
+                    <ion-button fill="clear" (click)="onSend()">
+                        <ion-icon class="ion-align-items-end" name="send" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
