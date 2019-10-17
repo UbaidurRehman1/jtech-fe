@@ -25,11 +25,13 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.7.1",
     "@stomp/ng2-stompjs": "^7.2.0",
+    "@stomp/stompjs": "^5.4.2",
     "@types/socket.io-client": "^1.4.32",
     "@types/sockjs-client": "^1.1.1",
     "@types/stompjs": "^2.3.4",
     "core-js": "^2.5.4",
     "rxjs": "~6.5.1",
+    "sockjs-client": "^1.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
