@@ -12,7 +12,7 @@ export class SendMessageComponent implements OnInit {
     ngOnInit() {}
 
     public onSend(): void {
-        console.log(this.message);
+        // console.log(this.message);
     }
 
 }

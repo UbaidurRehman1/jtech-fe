@@ -20,7 +20,7 @@ export class SessionsPage implements OnInit {
     public ionViewWillEnter() {
         this.isLoading = true;
         this.sessions = this.sessionService.getSessionsById(this.authService.user.id);
-        console.log(this.sessions);
+        // console.log(this.sessions);
         this.isLoading = false;
     }
     get sessions(): Observable<Session[]> {

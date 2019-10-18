@@ -7,7 +7,7 @@ import {User} from '../../model/user/user';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {SessionService} from '../../service/session/session.service';
-import {MessageModel} from '../../model/conversation/messageModel';
+import {Message} from '../../model/conversation/messageModel';
 
 @Component({
     selector: 'app-conversation',
@@ -29,28 +29,29 @@ export class ConversationPage implements OnInit, OnDestroy {
     ) {
     }
     // tslint:disable-next-line:variable-name
-    public conversation_: Observable<MessageModel[]> = null;
+    public conversation_: Observable<Message[]> = null;
     ngOnInit() {
         this.isLoading = true;
-        // this.activeRoute.paramMap.subscribe((value: ParamMap) => {
-        //     // if (value.has(ConversationPage.sessionId)) {
-        //     //     this.sessionId = value.get(ConversationPage.sessionId);
-        //     //     this.sessionService.getSession(this.sessionId).subscribe((session: Session) => {
-        //     //         this.session = session;
-        //     //         this.conversation = this.getConversation();
-        //     //         this.isLoading = false;
-        //     //     });
-        //     }
-        // });
+        this.activeRoute.paramMap.subscribe((value: ParamMap) => {
+            if (value.has(ConversationPage.sessionId)) {
+                this.sessionId = value.get(ConversationPage.sessionId);
+
+                // this.sessionService.getSession(this.sessionId).subscribe((session: Session) => {
+                //     this.session = session;
+                //     this.conversation = this.getConversation();
+                //     this.isLoading = false;
+                // });
+            }
+        });
         // this.authService.getUser().subscribe((user: User) => {
         //     this.userName = user.name;
         // });
     }
-    get conversation(): Observable<MessageModel[]> {
+    get conversation(): Observable<Message[]> {
         return this.conversation_;
     }
 
-    set conversation(value: Observable<MessageModel[]>) {
+    set conversation(value: Observable<Message[]>) {
         this.conversation_ = value;
     }
 
@@ -63,9 +64,9 @@ export class ConversationPage implements OnInit, OnDestroy {
     }
 
     public onSend(): void {
-        this.conversationService.addMessage(new MessageModel('1', this.sessionId, this.message, '1', null, null, null, null)).subscribe();
+        this.conversationService.addMessage(new Message('1', this.sessionId, this.message, '1', null, null, null, null)).subscribe();
     }
-    public getConversation(): Observable<MessageModel[]> {
+    public getConversation(): Observable<Message[]> {
         return this.activeRoute.paramMap.pipe(switchMap((value: ParamMap) => {
             if (value.has(ConversationPage.sessionId)) {
                 const sessionId = value.get(ConversationPage.sessionId);

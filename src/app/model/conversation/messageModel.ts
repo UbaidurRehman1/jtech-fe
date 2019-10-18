@@ -1,6 +1,6 @@
 import {User} from '../user/user';
 
-export class MessageModel {
+export class Message {
     constructor(public id: string,
                 public sessionId: string,
                 public text: string,

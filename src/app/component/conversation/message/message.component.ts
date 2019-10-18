@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MessageModel} from '../../../model/conversation/messageModel';
+import {Message} from '../../../model/conversation/messageModel';
 import {AuthService} from '../../../service/auth/auth.service';
 import {User} from '../../../model/user/user';
 
@@ -9,7 +9,7 @@ import {User} from '../../../model/user/user';
     styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent implements OnInit {
-    @Input() message: MessageModel = null;
+    @Input() message: Message = null;
     constructor(private authService: AuthService) { }
     ngOnInit() {
     }
