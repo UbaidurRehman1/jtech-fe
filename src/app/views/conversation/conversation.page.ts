@@ -35,6 +35,7 @@ export class ConversationPage implements OnInit, OnDestroy {
         this.currentSession = null;
         this.currentUserId = null;
         // TODO add subscription and delete this subscription on ng destroy
+        // getting session and then getting conversation
         this.activeRoute.paramMap.subscribe((value: ParamMap) => {
             if (value.has(ConversationPage.sessionId)) {
                 const sessionId = value.get(ConversationPage.sessionId);
@@ -46,16 +47,8 @@ export class ConversationPage implements OnInit, OnDestroy {
                         this.isLoading = false;
                     });
                 });
-                // this.sessionService.getSession(this.sessionId).subscribe((session: Session) => {
-                //     this.session = session;
-                //     this.conversation = this.getConversation();
-                //     this.isLoading = false;
-                // });
             }
         });
-        // this.authService.getUser().subscribe((user: User) => {
-        //     this.userName = user.name;
-        // });
     }
     get conversation(): Observable<Message[]> {
         return this.currentConversation;
@@ -73,8 +66,8 @@ export class ConversationPage implements OnInit, OnDestroy {
     }
 
     public onSend(): void {
-        this.conversationService.sendMessage(new Message('1', this.currentSession.id,
-            this.message, this.authService.user.id, new Date(), null, null, null)).subscribe();
+        this.conversationService.sendMessage({...new Message('1', this.currentSession.id,
+            this.message, this.authService.user.id, new Date(), null, null, null)}).subscribe();
     }
     public getConversation(): Observable<Message[]> {
         // return this.activeRoute.paramMap.pipe(switchMap((value: ParamMap) => {

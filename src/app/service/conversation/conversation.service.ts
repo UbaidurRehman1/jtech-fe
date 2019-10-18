@@ -18,7 +18,9 @@ export class ConversationService {
                 private http: HttpClient) { }
 
     public get messages(): Observable<Message[]> {
-        return this._messages.asObservable();
+        return this._messages.asObservable().pipe(tap((messages: Message[]) => {
+            console.log(messages);
+        }));
     }
     /**
      * it will call when we enter into the conversion (hit the session)
@@ -41,6 +43,7 @@ export class ConversationService {
     }
     public sendMessage(message: Message): Observable<Message[]> {
         return this.messages.pipe(take(1), tap((messages: Message[]) => {
+            const len: number = messages.length;
             messages.push(message);
             this._messages.next(messages);
         }));
