@@ -9,18 +9,18 @@ import {User} from '../../model/user/user';
     providedIn: 'root'
 })
 export class ConversationService {
-    private messagesTemp: Message[] = [
-        new Message('1', '1', 'Hello, How are you', '1', new Date(), new Date(), new Date('2019-10-15T22:22:18.101'), null),
-        new Message('2', '1', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
-            '2', new Date(), new Date(), new Date('2019-10-15T22:22:19.101'), null),
-        new Message('3', '2', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
-            '1', new Date(), new Date(), new Date('2019-10-15T22:22:20.101'), null),
-        new Message('4', '2', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
-            '3', new Date(), new Date(), new Date('2019-10-15T22:22:21.101'), null)
-    ];
+    // private messagesTemp: Message[] = [
+    //     new Message('1', '1', 'Hello, How are you', '1', new Date(), new Date(), new Date('2019-10-15T22:22:18.101'), null),
+    //     new Message('2', '1', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
+    //         '2', new Date(), new Date(), new Date('2019-10-15T22:22:19.101'), null),
+    //     new Message('3', '2', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
+    //         '1', new Date(), new Date(), new Date('2019-10-15T22:22:20.101'), null),
+    //     new Message('4', '2', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
+    //         '3', new Date(), new Date(), new Date('2019-10-15T22:22:21.101'), null)
+    // ];
 
     // tslint:disable-next-line:variable-name
-    private _messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>(this.messagesTemp);
+    private _messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
     constructor(private userService: UserService) { }
 
     public get messages(): Observable<Message[]> {

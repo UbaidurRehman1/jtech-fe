@@ -22,6 +22,7 @@ export class ConversationPage implements OnInit, OnDestroy {
     private isLoading = true;
     // tslint:disable-next-line:variable-name
     private _userName = null;
+    private currentSession: Session = null;
     constructor(public activeRoute: ActivatedRoute,
                 public conversationService: ConversationService,
                 public authService: AuthService,
@@ -32,10 +33,13 @@ export class ConversationPage implements OnInit, OnDestroy {
     public conversation_: Observable<Message[]> = null;
     ngOnInit() {
         this.isLoading = true;
+        // TODO add subscription and delete this subscription on ng destroy
         this.activeRoute.paramMap.subscribe((value: ParamMap) => {
             if (value.has(ConversationPage.sessionId)) {
-                this.sessionId = value.get(ConversationPage.sessionId);
-
+                const sessionId = value.get(ConversationPage.sessionId);
+                this.sessionService.getCurrentSession(sessionId).subscribe((session: Session) => {
+                    this.currentSession = session;
+                });
                 // this.sessionService.getSession(this.sessionId).subscribe((session: Session) => {
                 //     this.session = session;
                 //     this.conversation = this.getConversation();
