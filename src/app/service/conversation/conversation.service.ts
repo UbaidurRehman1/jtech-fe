@@ -39,9 +39,9 @@ export class ConversationService {
             return messages;
         }));
     }
-    public addMessage(messageModel: Message): Observable<Message[]> {
+    public sendMessage(message: Message): Observable<Message[]> {
         return this.messages.pipe(take(1), tap((messages: Message[]) => {
-            messages.push(messageModel);
+            messages.push(message);
             this._messages.next(messages);
         }));
     }

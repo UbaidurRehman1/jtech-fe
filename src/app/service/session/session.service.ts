@@ -29,8 +29,12 @@ export class SessionService {
      * @return session of this id
      */
     public getCurrentSession(id: string): Observable<Session> {
+        console.log(this.allSessions);
         return this.allSessions.pipe(take(1), map((sessions: Session[]) => {
-            return sessions.find((session: Session) => session.id === id);
+            return sessions.find((session: Session) => {
+                // tslint:disable-next-line:triple-equals
+                return session.id == id;
+            });
         }));
     }
 }

@@ -38,7 +38,7 @@ export class AuthPage implements OnInit {
         const data: FormData = this.form.value;
         this.userService.getUserByEmail(data.email).subscribe((user: User) => {
             this.authService.user = user;
-            // console.log(user);
+            console.log(user);
             this.router.navigate(['/']).then();
         }, (error) => {
             console.log(error);

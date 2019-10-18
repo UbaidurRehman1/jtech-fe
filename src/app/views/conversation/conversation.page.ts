@@ -8,6 +8,8 @@ import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {SessionService} from '../../service/session/session.service';
 import {Message} from '../../model/conversation/messageModel';
+import {Timestamp} from 'rxjs/internal-compatibility';
+import {AssertNotNull} from '@angular/compiler';
 
 @Component({
     selector: 'app-conversation',
@@ -25,18 +27,21 @@ export class ConversationPage implements OnInit, OnDestroy {
     ) {
     }
     private currentSession: Session = null;
-    public currentConversation: Observable<Message[]> = null;
+    private currentConversation: Observable<Message[]> = null;
+    private currentUserId: string = null;
     ngOnInit() {
         this.isLoading = true;
         this.currentConversation = null;
         this.currentSession = null;
+        this.currentUserId = null;
         // TODO add subscription and delete this subscription on ng destroy
         this.activeRoute.paramMap.subscribe((value: ParamMap) => {
             if (value.has(ConversationPage.sessionId)) {
                 const sessionId = value.get(ConversationPage.sessionId);
                 this.sessionService.getCurrentSession(sessionId).subscribe((session: Session) => {
+                    console.log(session);
                     this.currentSession = session;
-                    this.conversationService.populateConversation('1').subscribe(() => {
+                    this.conversationService.populateConversation(sessionId).subscribe(() => {
                         this.conversation = this.conversationService.getCurrentConversation();
                         this.isLoading = false;
                     });
@@ -68,7 +73,8 @@ export class ConversationPage implements OnInit, OnDestroy {
     }
 
     public onSend(): void {
-        // this.conversationService.addMessage(new Message('1', this.sessionId, this.message, '1', null, null, null, null)).subscribe();
+        this.conversationService.sendMessage(new Message('1', this.currentSession.id,
+            this.message, this.authService.user.id, new Date(), null, null, null)).subscribe();
     }
     public getConversation(): Observable<Message[]> {
         // return this.activeRoute.paramMap.pipe(switchMap((value: ParamMap) => {
