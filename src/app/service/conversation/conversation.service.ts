@@ -4,40 +4,39 @@ import {BehaviorSubject, Observable, pipe} from 'rxjs';
 import {map, take, tap} from 'rxjs/operators';
 import {UserService} from '../user/user.service';
 import {User} from '../../model/user/user';
+import {HttpClient} from '@angular/common/http';
+import {async} from '@angular/core/testing';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ConversationService {
-    // private messagesTemp: Message[] = [
-    //     new Message('1', '1', 'Hello, How are you', '1', new Date(), new Date(), new Date('2019-10-15T22:22:18.101'), null),
-    //     new Message('2', '1', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
-    //         '2', new Date(), new Date(), new Date('2019-10-15T22:22:19.101'), null),
-    //     new Message('3', '2', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
-    //         '1', new Date(), new Date(), new Date('2019-10-15T22:22:20.101'), null),
-    //     new Message('4', '2', 'I am find, What are you doing now, I have heard a good news about you. Is this correct or not',
-    //         '3', new Date(), new Date(), new Date('2019-10-15T22:22:21.101'), null)
-    // ];
-
+    private url = 'http://localhost:8200/jtech/messages/';
     // tslint:disable-next-line:variable-name
-    private _messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
-    constructor(private userService: UserService) { }
+    private _messages: BehaviorSubject<Message[]> = null;
+    constructor(private userService: UserService,
+                private http: HttpClient) { }
 
     public get messages(): Observable<Message[]> {
         return this._messages.asObservable();
     }
-    public getConversation(id: string): Observable<Message[]> {
-        return this.messages.pipe(map((messages: Message[]) => {
-            return messages.filter((messageModel: Message) => {
-                return messageModel.sessionId === id;
+    /**
+     * it will call when we enter into the conversion (hit the session)
+     * we actually want to get SubjectBehavior so that any change can be detected
+     * so it will assign a new instance of BehaviourSubject and conversation into it
+     * @param sessionId of the session
+     * @return all conversation of this session (limit 100)
+     */
+    public populateConversation(sessionId: string): Observable<Message[]> {
+        const url = `${this.url}session/${sessionId}`;
+        return this.http.get<Message[]>(url).pipe(take(1), map((messages: Message[]) => {
+            messages.forEach((message: Message) => {
+                this.userService.getUserById(message.ownerId).subscribe((owner: User) => {
+                    message.owner = owner;
+                });
             });
-        }), tap((messages: Message[]) => {
-            // console.log(messages);
-            // messages.forEach((messageModel: Message) => {
-            //     this.userService.getUser(messageModel.ownerId).subscribe((user: User) => {
-            //         messageModel.owner = user;
-            //     });
-            // });
+            this._messages = new BehaviorSubject<Message[]>(messages);
+            return messages;
         }));
     }
     public addMessage(messageModel: Message): Observable<Message[]> {
@@ -45,5 +44,15 @@ export class ConversationService {
             messages.push(messageModel);
             this._messages.next(messages);
         }));
+    }
+    // a very basic idea, when we hit a session and enter into conversation
+    // the very first method call is getConversation(sessionId) which return all
+    // conversation of this session
+    // now we have to store this conversation in the behaviour subject of Message[]
+    // whenever a new message arrive then we push this message into array and set next
+    // which emit all the message some thing like this....
+    // lets start
+    public getCurrentConversation(): Observable<Message[]> {
+        return this.messages;
     }
 }

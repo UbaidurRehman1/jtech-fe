@@ -16,29 +16,30 @@ import {Message} from '../../model/conversation/messageModel';
 })
 export class ConversationPage implements OnInit, OnDestroy {
     private static sessionId = 'sessionId';
-    private sessionId: string;
     public message: string;
-    private session: Session = null;
     private isLoading = true;
-    // tslint:disable-next-line:variable-name
-    private _userName = null;
-    private currentSession: Session = null;
     constructor(public activeRoute: ActivatedRoute,
                 public conversationService: ConversationService,
                 public authService: AuthService,
                 private sessionService: SessionService,
     ) {
     }
-    // tslint:disable-next-line:variable-name
-    public conversation_: Observable<Message[]> = null;
+    private currentSession: Session = null;
+    public currentConversation: Observable<Message[]> = null;
     ngOnInit() {
         this.isLoading = true;
+        this.currentConversation = null;
+        this.currentSession = null;
         // TODO add subscription and delete this subscription on ng destroy
         this.activeRoute.paramMap.subscribe((value: ParamMap) => {
             if (value.has(ConversationPage.sessionId)) {
                 const sessionId = value.get(ConversationPage.sessionId);
                 this.sessionService.getCurrentSession(sessionId).subscribe((session: Session) => {
                     this.currentSession = session;
+                    this.conversationService.populateConversation('1').subscribe(() => {
+                        this.conversation = this.conversationService.getCurrentConversation();
+                        this.isLoading = false;
+                    });
                 });
                 // this.sessionService.getSession(this.sessionId).subscribe((session: Session) => {
                 //     this.session = session;
@@ -52,31 +53,31 @@ export class ConversationPage implements OnInit, OnDestroy {
         // });
     }
     get conversation(): Observable<Message[]> {
-        return this.conversation_;
+        return this.currentConversation;
     }
 
     set conversation(value: Observable<Message[]>) {
-        this.conversation_ = value;
+        this.currentConversation = value;
     }
 
     get userName(): any {
-        return this._userName;
+        return null;
     }
 
     set userName(value: any) {
-        this._userName = value;
     }
 
     public onSend(): void {
-        this.conversationService.addMessage(new Message('1', this.sessionId, this.message, '1', null, null, null, null)).subscribe();
+        // this.conversationService.addMessage(new Message('1', this.sessionId, this.message, '1', null, null, null, null)).subscribe();
     }
     public getConversation(): Observable<Message[]> {
-        return this.activeRoute.paramMap.pipe(switchMap((value: ParamMap) => {
-            if (value.has(ConversationPage.sessionId)) {
-                const sessionId = value.get(ConversationPage.sessionId);
-                return this.conversationService.getConversation(sessionId);
-            }
-        }));
+        // return this.activeRoute.paramMap.pipe(switchMap((value: ParamMap) => {
+        //     if (value.has(ConversationPage.sessionId)) {
+        //         const sessionId = value.get(ConversationPage.sessionId);
+        //         return this.conversationService.getConversation(sessionId);
+        //     }
+        // }));
+        return  null;
     }
     ngOnDestroy(): void {
         // this.sock._disconnect();

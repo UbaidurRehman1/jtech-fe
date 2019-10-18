@@ -1,4 +1,4 @@
-<ion-item-sliding>
+<ion-item-sliding *ngIf="message.owner">
     <div *ngIf="!isOwnerMessage()">
         <ion-item class="ion-margin-bottom">
             <ion-avatar slot="start">

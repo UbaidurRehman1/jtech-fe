@@ -15,12 +15,12 @@ export class AuthService {
     private _isAuth = false;
     constructor(private userService: UserService) {
     }
-    public getUser(): Observable<User> {
-        // return this.userService.getUser('1').pipe(take(1), map((user: User) => {
-        //     return user;
-        // }));
-        return ;
-    }
+    // public getUser(): Observable<User> {
+    //     // return this.userService.getUser('1').pipe(take(1), map((user: User) => {
+    //     //     return user;
+    //     // }));
+    //     return ;
+    // }
     get user(): User {
         return  this._user;
     }
