@@ -3,6 +3,7 @@ import {Session} from '../../../model/session/session';
 import {SessionService} from '../../../service/session/session.service';
 import {AuthService} from '../../../service/auth/auth.service';
 import {Observable} from 'rxjs';
+import {User} from '../../../model/user/user';
 
 @Component({
     selector: 'app-sessions',
@@ -28,5 +29,8 @@ export class SessionsPage implements OnInit {
     }
     set sessions(value: Observable<Session[]>) {
         this._sessions = value;
+    }
+    get user(): User {
+        return this.authService.user;
     }
 }

@@ -1,7 +1,12 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            <h3>Welcome {{userName}}</h3>
+            <ion-item *ngIf="reciever">
+                <ion-avatar>
+                    <ion-img [src]="reciever.imageURL"></ion-img>
+                </ion-avatar>
+                <ion-text class="ion-margin-start">{{reciever.firstName}}</ion-text>
+            </ion-item>
         </ion-title>
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
@@ -12,21 +17,32 @@
 <ion-content>
 <!--    <ion-list *ngIf="!isLoading">-->
 <!--        <ion-item *ngFor="let message of conversation | async">-->
-<!--            <ion-text>{{message.text}}</ion-text>-->
+<!--            <app-message [message]="message"></app-message>-->
 <!--        </ion-item>-->
 <!--    </ion-list>-->
+        <ion-grid *ngIf="!isLoading">
+            <ion-row>
+                <ion-col>
+                    <ion-list class="ion-margin-bottom ion-padding-bottom">
+                        <div *ngFor="let message of conversation | async">
+                            <app-message [message]="message"></app-message>
+                        </div>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+<!--        <ion-grid *ngIf="!isLoading">-->
+<!--        <ion-row>-->
+<!--            <ion-col>-->
+<!--                <ion-virtual-scroll [items]="conversation | async">-->
+<!--                    <div *virtualItem="let message">-->
+<!--                        <app-message [message]="message"></app-message>-->
+<!--                    </div>-->
+<!--                </ion-virtual-scroll>-->
+<!--            </ion-col>-->
+<!--        </ion-row>-->
+<!--    </ion-grid>-->
 
-    <ion-grid *ngIf="!isLoading">
-        <ion-row>
-            <ion-col>
-                <ion-virtual-scroll [items]="conversation | async">
-                    <div *virtualItem="let message">
-                        <app-message [message]="message"></app-message>
-                    </div>
-                </ion-virtual-scroll>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
     <ion-grid class="footer">
         <ion-row>
             <ion-col>

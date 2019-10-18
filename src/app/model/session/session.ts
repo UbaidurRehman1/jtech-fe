@@ -8,6 +8,6 @@ export class Session {
                 public lastTimeActive: Date,
                 public initiateTime: Date,
                 public sender: User,
-                public reciever: User) {
+                public receiver: User) {
     }
 }

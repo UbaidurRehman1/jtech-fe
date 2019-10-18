@@ -24,7 +24,8 @@ export class UserService {
      */
     public getUserById(id: string): Observable<User> {
         return this.allUsers.pipe(take(1), map((users: User[]) => {
-            return users.find((user: User) => user.id === id);
+            // tslint:disable-next-line:triple-equals
+            return users.find((user: User) => user.id == id);
         }));
     }
 }

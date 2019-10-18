@@ -1,6 +1,13 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>sessions</ion-title>
+        <ion-title>
+            <ion-item>
+                <ion-avatar>
+                    <ion-img [src]="user.imageURL"></ion-img>
+                </ion-avatar>
+                <ion-text class="ion-margin-start">{{user.firstName}}</ion-text>
+            </ion-item>
+        </ion-title>
     </ion-toolbar>
 </ion-header>
 

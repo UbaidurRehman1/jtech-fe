@@ -10,6 +10,7 @@ import {SessionService} from '../../service/session/session.service';
 import {Message} from '../../model/conversation/messageModel';
 import {Timestamp} from 'rxjs/internal-compatibility';
 import {AssertNotNull} from '@angular/compiler';
+import {UserService} from '../../service/user/user.service';
 
 @Component({
     selector: 'app-conversation',
@@ -24,11 +25,13 @@ export class ConversationPage implements OnInit, OnDestroy {
                 public conversationService: ConversationService,
                 public authService: AuthService,
                 private sessionService: SessionService,
+                private userService: UserService
     ) {
     }
     private currentSession: Session = null;
     private currentConversation: Observable<Message[]> = null;
     private currentUserId: string = null;
+    private currentRecieverUser: User = null;
     ngOnInit() {
         this.isLoading = true;
         this.currentConversation = null;
@@ -41,6 +44,14 @@ export class ConversationPage implements OnInit, OnDestroy {
                 const sessionId = value.get(ConversationPage.sessionId);
                 this.sessionService.getCurrentSession(sessionId).subscribe((session: Session) => {
                     console.log(session);
+                    console.log(this.user);
+                    // tslint:disable-next-line:triple-equals
+                    const recieverId: string = this.user.id == session.senderId ? session.receiverId : session.senderId;
+                    console.log(recieverId);
+                    this.userService.getUserById(recieverId).subscribe((reciever: User) => {
+                        console.log(reciever);
+                        this.reciever = reciever;
+                    });
                     this.currentSession = session;
                     this.conversationService.populateConversation(sessionId).subscribe(() => {
                         this.conversation = this.conversationService.getCurrentConversation();
@@ -58,27 +69,19 @@ export class ConversationPage implements OnInit, OnDestroy {
         this.currentConversation = value;
     }
 
-    get userName(): any {
-        return null;
+    get user(): User {
+        return this.authService.user;
     }
-
-    set userName(value: any) {
+    get reciever(): User {
+        return this.currentRecieverUser;
     }
-
+    set reciever(user: User) {
+        this.currentRecieverUser = user;
+    }
     public onSend(): void {
         this.conversationService.sendMessage({...new Message('1', this.currentSession.id,
             this.message, this.authService.user.id, new Date(), null, null, null)}).subscribe();
     }
-    public getConversation(): Observable<Message[]> {
-        // return this.activeRoute.paramMap.pipe(switchMap((value: ParamMap) => {
-        //     if (value.has(ConversationPage.sessionId)) {
-        //         const sessionId = value.get(ConversationPage.sessionId);
-        //         return this.conversationService.getConversation(sessionId);
-        //     }
-        // }));
-        return  null;
-    }
     ngOnDestroy(): void {
-        // this.sock._disconnect();
     }
 }

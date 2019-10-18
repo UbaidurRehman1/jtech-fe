@@ -44,6 +44,10 @@ export class ConversationService {
     public sendMessage(message: Message): Observable<Message[]> {
         return this.messages.pipe(take(1), tap((messages: Message[]) => {
             const len: number = messages.length;
+            // this.http.post(this.url)
+            this.userService.getUserById(message.ownerId).subscribe((owner: User) => {
+                message.owner = owner;
+            });
             messages.push(message);
             this._messages.next(messages);
         }));
