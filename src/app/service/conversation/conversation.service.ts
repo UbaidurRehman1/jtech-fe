@@ -33,11 +33,11 @@ export class ConversationService {
             });
         }), tap((messages: MessageModel[]) => {
             console.log(messages);
-            messages.forEach((messageModel: MessageModel) => {
-                this.userService.getUser(messageModel.ownerId).subscribe((user: User) => {
-                    messageModel.owner = user;
-                });
-            });
+            // messages.forEach((messageModel: MessageModel) => {
+            //     this.userService.getUser(messageModel.ownerId).subscribe((user: User) => {
+            //         messageModel.owner = user;
+            //     });
+            // });
         }));
     }
     public addMessage(messageModel: MessageModel): Observable<MessageModel[]> {

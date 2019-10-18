@@ -14,6 +14,6 @@ export class MessageComponent implements OnInit {
     ngOnInit() {
     }
     public isOwnerMessage(): boolean {
-        return this.message.ownerId === this.authService.userId;
+        return this.message.ownerId === this.authService.user.id;
     }
 }

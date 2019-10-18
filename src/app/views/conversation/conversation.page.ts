@@ -32,19 +32,19 @@ export class ConversationPage implements OnInit, OnDestroy {
     public conversation_: Observable<MessageModel[]> = null;
     ngOnInit() {
         this.isLoading = true;
-        this.activeRoute.paramMap.subscribe((value: ParamMap) => {
-            if (value.has(ConversationPage.sessionId)) {
-                this.sessionId = value.get(ConversationPage.sessionId);
-                this.sessionService.getSession(this.sessionId).subscribe((session: Session) => {
-                    this.session = session;
-                    this.conversation = this.getConversation();
-                    this.isLoading = false;
-                });
-            }
-        });
-        this.authService.getUser().subscribe((user: User) => {
-            this.userName = user.name;
-        });
+        // this.activeRoute.paramMap.subscribe((value: ParamMap) => {
+        //     // if (value.has(ConversationPage.sessionId)) {
+        //     //     this.sessionId = value.get(ConversationPage.sessionId);
+        //     //     this.sessionService.getSession(this.sessionId).subscribe((session: Session) => {
+        //     //         this.session = session;
+        //     //         this.conversation = this.getConversation();
+        //     //         this.isLoading = false;
+        //     //     });
+        //     }
+        // });
+        // this.authService.getUser().subscribe((user: User) => {
+        //     this.userName = user.name;
+        // });
     }
     get conversation(): Observable<MessageModel[]> {
         return this.conversation_;

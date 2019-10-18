@@ -8,18 +8,19 @@ import {HttpClient} from '@angular/common/http';
 })
 export class UserService {
     private url = 'http://localhost:8200/jtech/users/';
-    private usersTemp: User[] = [
-        new User('1', 'Ubaid ur Rehman', 'https://res.cloudinary.com/student1234567/image/upload/v1571164297/IMG_20190505_163303_967.jpg'),
-        new User('2', 'Kashif Nazir Khan',
-            'https://res.cloudinary.com/student1234567/image/upload/v1571141876/demo/IMG_20190524_230103.jpg'),
-        new User('3', 'Ahsan Farooq', 'https://res.cloudinary.com/student1234567/image/upload/v1571141876/demo/IMG_20190524_225912.jpg'),
-    ];
+    // private usersTemp: User[] = [
+    //     new User('1', 'Ubaid ur Rehman',
+    //     'https://res.cloudinary.com/student1234567/image/upload/v1571164297/IMG_20190505_163303_967.jpg'),
+    //     new User('2', 'Kashif Nazir Khan',
+    //         'https://res.cloudinary.com/student1234567/image/upload/v1571141876/demo/IMG_20190524_230103.jpg'),
+    //     new User('3', 'Ahsan Farooq', 'https://res.cloudinary.com/student1234567/image/upload/v1571141876/demo/IMG_20190524_225912.jpg'),
+    // ];
     // tslint:disable-next-line:variable-name
-    private _users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.usersTemp);
+    // private _users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.usersTemp);
     constructor(private http: HttpClient) { }
-    get users(): Observable<User[]> {
-        return this._users.asObservable();
-    }
+    // get users(): Observable<User[]> {
+    //     // return this._users.asObservable();
+    // }
     public getUserByEmail(email: string): Observable<User> {
         // return this.users.pipe(take(1), map((users: User[]) => {
         //     return users.filter((user: User) => id === user.id);
