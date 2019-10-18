@@ -14,6 +14,7 @@ export class SlidingItemComponent implements OnInit {
     @Input() session: Session = null;
     constructor(private authService: AuthService) { }
     ngOnInit() {
+        console.log(this.session);
     }
     get imageURL() {
         return (this.session.sender.id === this.authService.user.id) ? this.session.reciever.imageURL : this.session.sender.imageURL;

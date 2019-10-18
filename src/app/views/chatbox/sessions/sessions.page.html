@@ -8,7 +8,7 @@
     <ion-grid *ngIf="!isLoading">
         <ion-row>
             <ion-col>
-                <ion-virtual-scroll [items]="sessions">
+                <ion-virtual-scroll [items]="sessions | async">
                     <div *virtualItem="let session">
                         <app-sliding-item [session]="session"></app-sliding-item>
                     </div>
