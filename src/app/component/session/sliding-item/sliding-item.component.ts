@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Session} from '../../../model/session/session';
+import {User} from '../../../model/user/user';
 
 @Component({
     selector: 'app-sliding-item',
@@ -11,7 +12,8 @@ export class SlidingItemComponent implements OnInit {
     public _uri = '/conversation';
     @Input() session: Session = null;
     constructor() { }
-    ngOnInit() {}
+    ngOnInit() {
+    }
     get uri() {
         return this._uri + '/' + this.session.id;
     }

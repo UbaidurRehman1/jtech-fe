@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {User} from '../../model/user/user';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {map, take} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
+    private url = 'http://localhost:8200/jtech/users/';
     private usersTemp: User[] = [
         new User('1', 'Ubaid ur Rehman', 'https://res.cloudinary.com/student1234567/image/upload/v1571164297/IMG_20190505_163303_967.jpg'),
         new User('2', 'Kashif Nazir Khan',
@@ -15,13 +16,14 @@ export class UserService {
     ];
     // tslint:disable-next-line:variable-name
     private _users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.usersTemp);
-    constructor() { }
+    constructor(private http: HttpClient) { }
     get users(): Observable<User[]> {
         return this._users.asObservable();
     }
-    public getUser(id: string): Observable<User> {
-        return this.users.pipe(take(1), map((users: User[]) => {
-            return users.filter((user: User) => id === user.id);
-        }), map((users: User[]) => users[0]));
+    public getUserByEmail(email: string): Observable<User> {
+        // return this.users.pipe(take(1), map((users: User[]) => {
+        //     return users.filter((user: User) => id === user.id);
+        // }), map((users: User[]) => users[0]));
+        return this.http.get<User>(this.url + `by/email/${email}`);
     }
 }

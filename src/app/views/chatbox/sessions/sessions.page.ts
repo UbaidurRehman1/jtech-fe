@@ -24,13 +24,18 @@ export class SessionsPage implements OnInit {
 
     ngOnInit() {
         this.isLoading = true;
-        this.sessionService.sessions.subscribe((sessions: Session[]) => {
+        this.sessionService.getSessionsById(this.authService.user.id).subscribe((sessions: Session[]) => {
+            console.log(sessions);
             this.sessions = sessions;
-            this.authService.getUser().subscribe((sender: User) => {
-                this.sender = sender;
-                this.isLoading = false;
-            });
+            this.isLoading = false;
         });
+        // this.sessionService.sessions.subscribe((sessions: Session[]) => {
+        //     this.sessions = sessions;
+        //     this.authService.getUser().subscribe((sender: User) => {
+        //         this.sender = sender;
+        //         this.isLoading = false;
+        //     });
+        // });
     }
 
     get sessions(): Session[] {
