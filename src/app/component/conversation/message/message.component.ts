@@ -12,6 +12,7 @@ export class MessageComponent implements OnInit {
     @Input() message: Message = null;
     constructor(private authService: AuthService) { }
     ngOnInit() {
+        console.log(this.message);
     }
     public isOwnerMessage(): boolean {
         return this.message.ownerId === this.authService.user.id;
