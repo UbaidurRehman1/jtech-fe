@@ -17,10 +17,10 @@ export class SlidingItemComponent implements OnInit {
         // console.log(this.session);
     }
     get imageURL() {
-        return (this.session.sender.id === this.authService.user.id) ? this.session.reciever.imageURL : this.session.sender.imageURL;
+        return (this.session.sender.id === this.authService.user.id) ? this.session.receiver.imageURL : this.session.sender.imageURL;
     }
     get name() {
-        return (this.session.sender.id === this.authService.user.id) ? this.session.reciever.firstName : this.session.sender.firstName;
+        return (this.session.sender.id === this.authService.user.id) ? this.session.receiver.firstName : this.session.sender.firstName;
     }
     get uri() {
         return this._uri + '/' + this.session.id;

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from '../../model/user/user';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map, take, tap} from 'rxjs/operators';
 
@@ -14,8 +14,12 @@ export class UserService {
     public getUserByEmail(email: string): Observable<User> {
         return this.http.get<User>(this.url + `by/email/${email}`);
     }
+    // TODO convert it into array
+    // TODO and update it after 5 minutes
     public populateUsers(): void {
-        this.allUsers = this.http.get<User[]>(this.url);
+        this.http.get<User[]>(this.url).subscribe((users: User[]) => {
+            this.allUsers = of(users);
+        });
     }
 
     /**

@@ -4,12 +4,9 @@ import {ConversationService} from '../../service/conversation/conversation.servi
 import {Session} from '../../model/session/session';
 import {AuthService} from '../../service/auth/auth.service';
 import {User} from '../../model/user/user';
-import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {SessionService} from '../../service/session/session.service';
 import {Message} from '../../model/conversation/messageModel';
-import {Timestamp} from 'rxjs/internal-compatibility';
-import {AssertNotNull} from '@angular/compiler';
 import {UserService} from '../../service/user/user.service';
 
 @Component({
@@ -55,6 +52,7 @@ export class ConversationPage implements OnInit, OnDestroy {
                     this.currentSession = session;
                     this.conversationService.populateConversation(sessionId).subscribe(() => {
                         this.conversation = this.conversationService.getCurrentConversation();
+                        this.conversationService.startReceivedMessageObserver(sessionId, recieverId);
                         this.isLoading = false;
                     });
                 });
@@ -79,9 +77,12 @@ export class ConversationPage implements OnInit, OnDestroy {
         this.currentRecieverUser = user;
     }
     public onSend(): void {
-        this.conversationService.sendMessage({...new Message('1', this.currentSession.id,
-            this.message, this.authService.user.id, new Date(), null, null, null)}).subscribe();
+        const message: Message = new Message(null, this.currentSession.id,
+            this.message, this.authService.user.id, null, null, null, null);
+        this.conversationService.sendMessage({...message}, this.currentSession.id).subscribe();
+        this.message = '';
     }
     ngOnDestroy(): void {
+        this.conversationService.removePoolingSubscription();
     }
 }
