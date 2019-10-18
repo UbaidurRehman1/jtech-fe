@@ -16,19 +16,13 @@ export class SessionsPage implements OnInit {
     // tslint:disable-next-line:variable-name
     private _sessions: Session[] = null;
     // tslint:disable-next-line:variable-name
-    private _sender: User = null;
+    // private _sender: User = null;
     // tslint:disable-next-line:variable-name
     constructor(private sessionService: SessionService,
                 private authService: AuthService,
                 private userService: UserService) { }
 
     ngOnInit() {
-        this.isLoading = true;
-        this.sessionService.getSessionsById(this.authService.user.id).subscribe((sessions: Session[]) => {
-            console.log(sessions);
-            this.sessions = sessions;
-            this.isLoading = false;
-        });
         // this.sessionService.sessions.subscribe((sessions: Session[]) => {
         //     this.sessions = sessions;
         //     this.authService.getUser().subscribe((sender: User) => {
@@ -37,18 +31,25 @@ export class SessionsPage implements OnInit {
         //     });
         // });
     }
-
+    ionViewWillEnter() {
+        this.isLoading = true;
+        this.sessionService.getSessionsById(this.authService.user.id).subscribe((sessions: Session[]) => {
+            console.log(sessions);
+            this.sessions = sessions;
+            this.isLoading = false;
+        });
+    }
     get sessions(): Session[] {
         return this._sessions;
     }
     set sessions(value: Session[]) {
         this._sessions = value;
     }
-    get sender(): User {
-        return this._sender;
-    }
-
-    set sender(value: User) {
-        this._sender = value;
-    }
+    // get sender(): User {
+    //     return this._sender;
+    // }
+    //
+    // set sender(value: User) {
+    //     this._sender = value;
+    // }
 }

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Session} from '../../../model/session/session';
 import {User} from '../../../model/user/user';
+import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
     selector: 'app-sliding-item',
@@ -11,8 +12,14 @@ export class SlidingItemComponent implements OnInit {
     // tslint:disable-next-line:variable-name
     public _uri = '/conversation';
     @Input() session: Session = null;
-    constructor() { }
+    constructor(private authService: AuthService) { }
     ngOnInit() {
+    }
+    get imageURL() {
+        return (this.session.sender.id === this.authService.user.id) ? this.session.reciever.imageURL : this.session.sender.imageURL;
+    }
+    get name() {
+        return (this.session.sender.id === this.authService.user.id) ? this.session.reciever.firstName : this.session.sender.firstName;
     }
     get uri() {
         return this._uri + '/' + this.session.id;
