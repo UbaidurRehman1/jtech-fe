@@ -66,27 +66,33 @@ export class ConversationService {
     }
     public startReceivedMessageObserver(sessionId: string, userId: string): void {
         console.log(`sessionId: ${sessionId} userId: ${userId}`);
-        const url = `${this.url}/session/${sessionId}/user/${userId}`;
+        // url which is used to get the not received messages of sender
+        const url = `${this.url}session/${sessionId}/user/${userId}`;
+        // counter which do repeat it self after 2 seconds, we have removed its subscription at ng destroy
         const counter: Observable<number> = interval(2000);
+        // after each 2 seconds it get not received messages
         this.poolingSubscription = counter.subscribe((num: number) => {
             this.http.get(url).subscribe((messages: Message[]) => {
-                const size: number = messages.length;
-                messages.forEach((message: Message) => {
-                    this.userService.getUserById(message.ownerId).subscribe((owner: User) => {
-                        message.owner = owner;
-                        console.log(`new message: ${message}`);
+                // this url will update the received time of the message
+                const putURL = `${this.url}session`;
+                // condition if new message arrived
+                const newMessages: boolean = messages.length > 0;
+                if (newMessages) {
+                    // when new message received then
+                    // updating the message
+                    this.http.put(putURL, messages).subscribe();
+                    // set the owner of the message
+                    messages.forEach((message: Message) => {
+                        this.userService.getUserById(message.ownerId).subscribe((owner: User) => {
+                            message.owner = owner;
+                            console.log(`new message: ${message}`);
+                        });
                     });
-                });
-                this._messages.getValue().concat(messages);
-                const tempMessages: Message[] = this._messages.getValue();
-                this._messages.next(tempMessages);
+                    // now emit the updated list of message
+                    this._messages.next(this._messages.getValue().concat(messages));
+                }
             });
         });
-        // interval(100000).pipe(startWith(0), switchMap(() => {
-        //         return  this.http.get(url);
-        // })).subscribe((res) => {
-        //     console.log(res);
-        // });
     }
     public removePoolingSubscription() {
         console.log('Removing Pooling subscription');
