@@ -90,6 +90,7 @@ export class ConversationService {
                     });
                     // now emit the updated list of message
                     this._messages.next(this._messages.getValue().concat(messages));
+                    // this._messages.getValue().concat(messages);
                 }
             });
         });

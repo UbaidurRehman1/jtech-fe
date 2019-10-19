@@ -8,6 +8,7 @@ export class Session {
                 public lastTimeActive: Date,
                 public initiateTime: Date,
                 public sender: User,
-                public receiver: User) {
+                public receiver: User,
+                public notificationNumber: number) {
     }
 }

@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {SessionService} from '../../service/session/session.service';
 import {Message} from '../../model/conversation/messageModel';
 import {UserService} from '../../service/user/user.service';
+import {NotificationService} from '../../service/notification/notification.service';
 
 @Component({
     selector: 'app-conversation',
@@ -22,7 +23,8 @@ export class ConversationPage implements OnInit, OnDestroy {
                 public conversationService: ConversationService,
                 public authService: AuthService,
                 private sessionService: SessionService,
-                private userService: UserService
+                private userService: UserService,
+                private notificationService: NotificationService
     ) {
     }
     private currentSession: Session = null;
@@ -56,6 +58,10 @@ export class ConversationPage implements OnInit, OnDestroy {
                     this.conversationService.populateConversation(sessionId).subscribe(() => {
                         this.conversation = this.conversationService.getCurrentConversation();
                         this.conversationService.startReceivedMessageObserver(sessionId, recieverId);
+                        // see all notifications
+                        // of this user (receiver user)
+                        // we require session id, and reciever id which is user id
+                        this.notificationService.setAllUnseenNotificationToSeen(this.user.id, sessionId);
                         this.isLoading = false;
                     });
                 });
