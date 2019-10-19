@@ -39,6 +39,9 @@ export class ConversationPage implements OnInit, OnDestroy {
         this.activeRoute.paramMap.subscribe((value: ParamMap) => {
             if (value.has(ConversationPage.sessionId)) {
                 const sessionId = value.get(ConversationPage.sessionId);
+                // active this user on specified session
+                console.log(sessionId);
+                this.sessionService.activateUserOnSession(sessionId, this.user.id);
                 this.sessionService.getCurrentSession(sessionId).subscribe((session: Session) => {
                     console.log(session);
                     console.log(this.user);
@@ -84,5 +87,6 @@ export class ConversationPage implements OnInit, OnDestroy {
     }
     ngOnDestroy(): void {
         this.conversationService.removePoolingSubscription();
+        this.sessionService.deactivateUserOnSession(this.currentSession.id, this.authService.user.id);
     }
 }

@@ -37,4 +37,27 @@ export class SessionService {
             });
         }));
     }
+
+    /**
+     * this method activate the user on the given session
+     * @param sessionId of current session
+     * @param userId of the current user
+     */
+    public activateUserOnSession(sessionId: string, userId: string, ) {
+        // http://localhost:8200/jtech/sessions/1/user/1/active/true
+        const url = `${this.url}${sessionId}/user/${userId}/active/true`;
+        console.log(`${url} at session.service line 49`);
+        this.http.get(url).subscribe();
+    }
+
+    /**
+     * deactivate the user on the given session
+     * @param sessionId of session
+     * @param userId of user
+     */
+    public deactivateUserOnSession(sessionId: string, userId: string) {
+        const url = `${this.url}${sessionId}/user/${userId}/active/false`;
+        console.log(`${url} at session.service line 49`);
+        this.http.get(url).subscribe();
+    }
 }
