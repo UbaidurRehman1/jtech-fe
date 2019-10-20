@@ -19,6 +19,8 @@ export class ConversationPage implements OnInit, OnDestroy {
     private static sessionId = 'sessionId';
     public message: string;
     private isLoading = true;
+    private showSendButton = 'ion-hide';
+    private showPlusButton = '';
     constructor(public activeRoute: ActivatedRoute,
                 public conversationService: ConversationService,
                 public authService: AuthService,
@@ -95,4 +97,21 @@ export class ConversationPage implements OnInit, OnDestroy {
         this.conversationService.removePoolingSubscription();
         this.sessionService.deactivateUserOnSession(this.currentSession.id, this.authService.user.id);
     }
+    public onType(): void {
+        console.log(this.message);
+        if (this.message.length > 0) {
+            this.showSendButton = '';
+            this.showPlusButton = 'ion-hide';
+        } else if (this.message.length <= 0) {
+            this.showSendButton = 'ion-hide';
+            this.showPlusButton = '';
+        }
+        console.log('default class ', this.showSendButton);
+    }
+    // get showSendButton(): string {
+    //     return this.message.length > 0 ? '' : 'ion-hide';
+    // }
+    // get showPlusButton(): string {
+    //     return this.message.length <= 0 ? '' : 'ion-hide';
+    // }
 }
