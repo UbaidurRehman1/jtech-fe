@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {User} from '../../model/user/user';
+import {AuthUser, User} from '../../model/user/user';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map, take, tap} from 'rxjs/operators';
@@ -30,6 +30,14 @@ export class UserService {
         return this.allUsers.pipe(take(1), map((users: User[]) => {
             // tslint:disable-next-line:triple-equals
             return users.find((user: User) => user.id == id);
+        }));
+    }
+    public authUser(user: AuthUser): Observable<User> {
+        return this.http.post<User>(`${this.url}auth`, user);
+    }
+    public createUser(user: AuthUser): Observable<User> {
+        return this.http.post<User>(`${this.url}`, user).pipe(tap(() => {
+            this.populateUsers();
         }));
     }
 }

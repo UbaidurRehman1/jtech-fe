@@ -12,8 +12,11 @@ const routes: Routes = [
         children: [
             {path: '', loadChildren: './sessions/sessions.module#SessionsPageModule'},
         ]},
-        {path: '', redirectTo: '/chatbox/tabs/all'},
-        {path: 'all', loadChildren: './discover/discover.module#DiscoverPageModule'}
+        // {path: '', redirectTo: '/chatbox/tabs/all'},
+        // {path: 'all', loadChildren: './discover/discover.module#DiscoverPageModule'}
+        {path: 'all', children: [
+            {path: '', loadChildren: './discover/discover.module#DiscoverPageModule'}
+        ]}
     ]}
 ];
 

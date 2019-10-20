@@ -7,3 +7,8 @@ export class User {
                 public lastSeen: Date,
                 public isActive: boolean) {}
 }
+
+export class AuthUser {
+    constructor(public email: string,
+                public password: string) {}
+}

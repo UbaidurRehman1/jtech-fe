@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../service/user/user.service';
-import {User} from '../../model/user/user';
+import {AuthUser, User} from '../../model/user/user';
 import {AuthService} from '../../service/auth/auth.service';
 import {Router} from '@angular/router';
 
@@ -36,12 +36,20 @@ export class AuthPage implements OnInit {
 
     public login(): void {
         const data: FormData = this.form.value;
-        this.userService.getUserByEmail(data.email).subscribe((user: User) => {
+        const user: AuthUser  = new AuthUser(data.email, data.password);
+        this.userService.authUser(user).subscribe((user: User) => {
             this.authService.user = user;
             console.log(user);
             this.router.navigate(['/']).then();
         }, (error) => {
             console.log(error);
         });
+        // this.userService.getUserByEmail(data.email).subscribe((user: User) => {
+        //     this.authService.user = user;
+        //     console.log(user);
+        //     this.router.navigate(['/']).then();
+        // }, (error) => {
+        //     console.log(error);
+        // });
     }
 }

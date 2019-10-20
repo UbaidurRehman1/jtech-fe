@@ -18,6 +18,11 @@
     <ion-grid *ngIf="!isLoading">
         <ion-row>
             <ion-col>
+                <div *ngIf="noSessions" class="ion-text-center">
+                    <ion-button routerLink="/chatbox/tabs/all" fill="clear" class="ion-margin-top">
+                        <ion-text>Go here to make new conversations</ion-text>
+                    </ion-button>
+                </div>
                 <ion-virtual-scroll [items]="sessions | async">
                     <div *virtualItem="let session">
                         <app-sliding-item [session]="session"></app-sliding-item>

@@ -4,6 +4,7 @@ import {UserService} from '../user/user.service';
 import {map, take} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {NotificationService} from '../notification/notification.service';
 
 @Injectable({
     providedIn: 'root'

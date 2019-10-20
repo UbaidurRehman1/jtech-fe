@@ -2,9 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Session} from '../../../model/session/session';
 import {SessionService} from '../../../service/session/session.service';
 import {AuthService} from '../../../service/auth/auth.service';
-import {interval, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {User} from '../../../model/user/user';
-import {tap} from 'rxjs/operators';
 import {NotificationService} from '../../../service/notification/notification.service';
 
 @Component({
@@ -13,9 +12,18 @@ import {NotificationService} from '../../../service/notification/notification.se
     styleUrls: ['./sessions.page.scss'],
 })
 export class SessionsPage implements OnInit, OnDestroy {
+    get noSessions(): boolean {
+        return this._noSessions;
+    }
+
+    set noSessions(value: boolean) {
+        this._noSessions = value;
+    }
     private isLoading = true;
     // tslint:disable-next-line:variable-name
     private _sessions: Observable<Session[]> = null;
+    // tslint:disable-next-line:variable-name
+    private _noSessions = true;
     constructor(private sessionService: SessionService,
                 private authService: AuthService,
                 private notificationService: NotificationService) { }
@@ -25,6 +33,7 @@ export class SessionsPage implements OnInit, OnDestroy {
         this.isLoading = true;
         this.sessionService.getSessionsById(this.authService.user.id).subscribe((sessions: Session[]) => {
             this._sessions = of(sessions);
+            this.noSessions = sessions.length <= 0;
             this.startNotificationPooling(this._sessions);
             this.isLoading = false;
         });
