@@ -9,7 +9,7 @@ const routes: Routes = [
     { path: 'auth', loadChildren: () => import('./views/auth/auth.module').then(m => m.AuthPageModule) },
     { path: 'detail', loadChildren: () => import('./views/detail/detail.module').then(m => m.DetailPageModule), canLoad: [AuthGuard]},
     { path: 'conversation/:sessionId',
-        loadChildren: () => import('./views/conversation/conversation.module').then(m => m.ConversationPageModule), canLoad: []}
+        loadChildren: () => import('./views/conversation/conversation.module').then(m => m.ConversationPageModule), canLoad: [AuthGuard]}
 ];
 
 @NgModule({

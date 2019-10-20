@@ -8,7 +8,6 @@ import { IonicModule } from '@ionic/angular';
 import { ConversationPage } from './conversation.page';
 import {MessageComponent} from '../../component/conversation/message/message.component';
 import {SendMessageComponent} from '../../component/conversation/send-message/send-message.component';
-import {StompConfig} from '@stomp/ng2-stompjs';
 // import {WebSocketConfig} from '../../service/sock/WebSocketConfig';
 
 const routes: Routes = [

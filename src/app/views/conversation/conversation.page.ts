@@ -18,9 +18,9 @@ import {NotificationService} from '../../service/notification/notification.servi
 export class ConversationPage implements OnInit, OnDestroy {
     private static sessionId = 'sessionId';
     public message: string;
-    private isLoading = true;
-    private showSendButton = 'ion-hide';
-    private showPlusButton = '';
+    public isLoading = true;
+    public showSendButton = 'ion-hide';
+    public showPlusButton = '';
     constructor(public activeRoute: ActivatedRoute,
                 public conversationService: ConversationService,
                 public authService: AuthService,

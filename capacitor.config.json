@@ -1,0 +1,7 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "jtech-fe",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

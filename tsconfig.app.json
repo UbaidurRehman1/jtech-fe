@@ -1,8 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/app",
-    "types": ["sockjs-client", "stompjs"]
+    "outDir": "./out-tsc/app"
   },
   "include": [
     "src/**/*.ts"

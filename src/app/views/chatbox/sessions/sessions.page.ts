@@ -13,7 +13,7 @@ import {NotificationService} from '../../../service/notification/notification.se
     styleUrls: ['./sessions.page.scss'],
 })
 export class SessionsPage implements OnInit, OnDestroy {
-    private isLoading = true;
+    public isLoading = true;
     // tslint:disable-next-line:variable-name
     private _sessions: Observable<Session[]> = null;
     constructor(private sessionService: SessionService,
