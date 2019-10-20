@@ -11,7 +11,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class SessionService {
     private url = 'http://localhost:8200/jtech/sessions/';
-    private allSessions: Observable<Session[]> = null;
+    // tslint:disable-next-line:variable-name
+    private _allSessions: Observable<Session[]> = null;
     constructor(private userService: UserService,
                 private http: HttpClient) { }
 
@@ -20,8 +21,8 @@ export class SessionService {
      * @return all sessions of this user
      */
     public getSessionsById(id: string): Observable<Session[]> {
-            this.allSessions = this.http.get<Session[]>(`${this.url}${id}`);
-            return this.allSessions;
+            this._allSessions = this.http.get<Session[]>(`${this.url}${id}`);
+            return this._allSessions;
     }
 
     /**
@@ -29,8 +30,8 @@ export class SessionService {
      * @return session of this id
      */
     public getCurrentSession(id: string): Observable<Session> {
-        console.log(this.allSessions);
-        return this.allSessions.pipe(take(1), map((sessions: Session[]) => {
+        console.log(this._allSessions);
+        return this._allSessions.pipe(take(1), map((sessions: Session[]) => {
             return sessions.find((session: Session) => {
                 // tslint:disable-next-line:triple-equals
                 return session.id == id;
@@ -59,5 +60,12 @@ export class SessionService {
         const url = `${this.url}${sessionId}/user/${userId}/active/false`;
         console.log(`${url} at session.service line 49`);
         this.http.get(url).subscribe();
+    }
+    get allSessions(): Observable<Session[]> {
+        return this._allSessions;
+    }
+
+    set allSessions(value: Observable<Session[]>) {
+        this._allSessions = value;
     }
 }
