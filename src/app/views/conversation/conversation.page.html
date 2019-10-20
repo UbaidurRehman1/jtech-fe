@@ -15,17 +15,17 @@
 </ion-header>
 
 <ion-content>
-<!--        <ion-grid *ngIf="!isLoading">-->
-<!--            <ion-row>-->
-<!--                <ion-col>-->
-<!--                    <ion-list class="ion-margin-bottom ion-padding-bottom">-->
-<!--                        <div *ngFor="let message of conversation | async">-->
-<!--                            <app-message [message]="message"></app-message>-->
-<!--                        </div>-->
-<!--                    </ion-list>-->
-<!--                </ion-col>-->
-<!--            </ion-row>-->
-<!--        </ion-grid>-->
+    <ion-grid *ngIf="!isLoading">
+        <ion-row>
+            <ion-col>
+                <ion-list class="ion-margin-bottom ion-padding-bottom">
+                    <div *ngFor="let message of conversation | async">
+                        <app-message [message]="message"></app-message>
+                    </div>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
 <ion-footer>
     <ion-item>
